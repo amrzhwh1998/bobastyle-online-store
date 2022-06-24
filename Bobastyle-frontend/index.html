@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="card.css" rel="stylesheet">
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/8.2.10/firebase-app.js"></script>
+    <!---------------------------------------------------------------------------------------------------------->
+    <script src="https://www.gstatic.com/firebasejs/8.2.10/firebase-auth.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <!---------------------------------------------------------------------------------------------------------->
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/8.2.10/firebase-database.js"></script>
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"
+        integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+    <title>BOBA Style</title>
+</head>
+
+<body class="body">
+
+    <div id="pre-loader" style="z-index: 9999999999999999999999999999999999;">
+        <div id="loader-logo" style="text-align: center;">ברוכים הבאים ל- <br>
+            <h1>BOBA Style</h1>
+        </div>
+        <div id="loader-circle"></div>
+        <div class="loader-section section-left"></div>
+        <div class="loader-section section-right"></div>
+    </div>
+    <style>
+        #pre-loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1000;
+        }
+
+        #pre-loader .loader-section {
+            position: fixed;
+            top: 0;
+            width:100%;
+            height: 100%;
+            z-index: 1000;
+            background:  linear-gradient( 135deg, #55cada 10%, #ecabc7 100%);
+            -webkit-transform: translateX(0);
+            -ms-transform: translateX(0);
+            transform: translateX(0);
+        }
+
+        #pre-loader .loader-section.section-left {
+            left: 0;
+        }
+
+        #pre-loader .loader-section.section-right {
+            right: 0;
+        }
+
+        #loader-logo {
+            display: block;
+            position: relative;
+            top: 40%;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-image: url("http://imgh.us/loading_4.svg");
+            z-index: 1001;
+        }
+
+        #loader-circle {
+            display: block;
+            position: relative;
+            left: 50%;
+            top: 35%;
+            width: 150px;
+            height: 150px;
+            margin: -75px 0 0 -75px;
+            border-radius: 50%;
+            border: 3px solid transparent;
+            border-top-color: #fff;
+            -webkit-animation: spin 2s linear infinite;
+            animation: spin 2s linear infinite;
+            z-index: 1001;
+        }
+
+        #loader-circle:before {
+            content: "";
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            right: 5px;
+            bottom: 5px;
+            border-radius: 50%;
+            border: 3px solid transparent;
+            border-top-color: #fff;
+            -webkit-animation: spin 3s linear infinite;
+            animation: spin 3s linear infinite;
+        }
+
+        #loader-circle:after {
+            content: "";
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            right: 15px;
+            bottom: 15px;
+            border-radius: 50%;
+            border: 3px solid transparent;
+            border-top-color: #fff;
+            -webkit-animation: spin 1.5s linear infinite;
+            animation: spin 1.5s linear infinite;
+        }
+
+        @-webkit-keyframes spin {
+            0% {
+                -webkit-transform: rotate(0deg);
+                -ms-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+
+            100% {
+                -webkit-transform: rotate(360deg);
+                -ms-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes spin {
+            0% {
+                -webkit-transform: rotate(0deg);
+                -ms-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+
+            100% {
+                -webkit-transform: rotate(360deg);
+                -ms-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+
+        .loaded #pre-loader .loader-section.section-left {
+            -webkit-transform: translateX(-100%);
+            -ms-transform: translateX(-100%);
+            transform: translateX(-100%);
+            -webkit-transition: all 0.7s 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+            transition: all 0.7s 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+        }
+
+        .loaded #pre-loader .loader-section.section-right {
+            -webkit-transform: translateX(100%);
+            -ms-transform: translateX(100%);
+            transform: translateX(100%);
+            -webkit-transition: all 0.7s 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+            transition: all 0.7s 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+        }
+
+        .loaded #loader-logo,
+        .loaded #loader-circle {
+            opacity: 0;
+            -webkit-transition: all 0.3s ease-out;
+            transition: all 0.3s ease-out;
+        }
+
+        .loaded #pre-loader {
+            visibility: hidden;
+            -webkit-transform: translateY(-100%);
+            -ms-transform: translateY(-100%);
+            transform: translateY(-100%);
+            -webkit-transition: all 0.3s 1s ease-out;
+            transition: all 0.3s 1s ease-out;
+        }
+
+        .no-js #pre-loader {
+            display: none;
+        }
+    </style>
+    <script>
+        var random = Math.floor((Math.random() * 2000)) + 2000;
+        $(document).ready(function () {
+            setTimeout(function () {
+                $('body').addClass('loaded');
+            }, random);
+        });
+
+    </script>
+
+    <div id="myDiv">
+        <nav id="nv" class="navbar navbar-light justify-content-between"
+            style="  z-index: 999999999; background: white;">
+            <div style="display: flex;">
+                <div class="fa fa-shopping-cart carttop cart-icon cart-toggle" style="font-size: xx-large;" alt="cart">
+                </div>
+                <span class="totalitems"></span>
+            </div>
+            <img src="ll.jpg" style="width: 100px;" alt="">
+
+        </nav>
+        <div class="space"></div>
+        <div class="cart-container">
+            <table class="cart">
+                <th style="    background: #94c1e5;">מוצר</th>
+                <th style="    background: #94c1e5;">קמות</th>
+
+                <th style="    background: #94c1e5;">size</th>
+
+                <th style="    background: #94c1e5;">X</th>
+
+
+            </table>
+            <form style="direction: rtl; margin-top: 10px;">
+                <form action="/action_page.php" class="form-row" style="display: table-caption; ">
+                  <div class="col">
+                    <input type="text" id="fullname" class="form-control" placeholder="שם מלא" style="width: 182px;
+                        height: 32px; text-align: start;">
+                  </div>
+                  <div class="col">
+                    <input type="tel" id="phone" class="pho form-control" name="phone" minlength="10" maxlength="10"
+                      pattern="[0-7]{3}-[0-9]{7}" placeholder="מספר טלפון"
+                      style="text-align: start; width: 182px; height: 32px;">
+                  </div>
+    
+                </form>
+    
+              </form>
+            <input type="submit" value="send" class="send-oreder" id="send-oreder">
+        </div>
+        <div class="space"></div>
+
+        <div id="navbar_top" style=" width: 100%;  display: flex; box-shadow: #6bc6d8 0px 5px; height: 50px;     overflow: hidden;
+    background-color: #f8f9fa;
+    z-index: 9999999;
+    position: fixed;
+    direction: ltr;
+    top: 0;">
+            <a style="background-color: #6bc6d8; float: left; display: block; color: #f8f9fa; text-align: center; padding: 12px 5px; text-decoration: none; font-size: 17px"
+                class="active" href="#first">baby boy</a>
+            <a style="float: left; display: block; color: #6bc6d8; text-align: center; padding: 12px 5px; text-decoration: none; font-size: 13px"
+                href="#zeros">baby girl</a>
+            <a style="float: left; display: block; color: #6bc6d8; text-align: center; padding: 12px 5px; text-decoration: none; font-size: 13px"
+                href="#tow">babys</a>
+           
+        </div>
+        <header>
+            <div class="overlay">
+                <h1>Simply The Best</h1>
+                <h3>BOBA Style</h3>
+
+                <br>
+                <div style="direction: ltr;">
+                    <div class="containers ">
+
+                        <div class="pic">
+                            <img src="gif2.jpg" style="width: 100%; height: 100%;" alt="">
+                            <h1 class="hhh3" style="font-family: monospace;
+                        margin-top: 16%;">Boba Style</h1>
+                        </div>
+
+                       
+                        <div class="box2"></div>
+
+                        <div class="social1">
+                            <i class="fa fa-facebook" aria-hidden="true"></i>
+                        </div>
+                        <div class="social2">
+                            <i class="fa fa-instagram" aria-hidden="true"></i>
+                        </div>
+                        <div class="social3">
+                            <i class="fa fa-whatsapp" aria-hidden="true"></i>
+                        </div>
+                    </div>
+
+
+                </div>
+                <br>
+
+                <hr style="margin-top: 100px;">
+
+            </div>
+        </header>
+
+
+        <!-- <div class="container" style="    margin-top: 150px;">
+            <div id="carousel" style="margin-left: 10%;">
+                <figure><img src="top1.png" style="width: -webkit-fill-available;
+            height: -webkit-fill-available;" alt=""></figure>
+                <figure><img src="top2.png" style="width: -webkit-fill-available;
+            height: -webkit-fill-available;" alt=""></figure>
+                <figure><img src="top3.png" style="width: -webkit-fill-available;
+            height: -webkit-fill-available;" alt=""></figure>
+                <figure><img src="top4.png" style="width: -webkit-fill-available;
+            height: -webkit-fill-available;" alt=""></figure>
+                <figure><img src="top5.png" style="width: -webkit-fill-available;
+            height: -webkit-fill-available;" alt=""></figure>
+                <figure><img src="top6.png" style="width: -webkit-fill-available;
+            height: -webkit-fill-available;" alt=""></figure>
+                <figure><img src="top7.png" style="width: -webkit-fill-available;
+            height: -webkit-fill-available;" alt=""></figure>
+                <figure><img src="top8.png" style="width: -webkit-fill-available;
+            height: -webkit-fill-available;" alt=""></figure>
+                <figure><img src="top9.png" style="width: -webkit-fill-available;
+            height: -webkit-fill-available;" alt=""></figure>
+            </div>
+        </div>-->
+<div style="text-align: center; margin-top: 20px; margin-bottom: 20px;">
+<a class="btn" href="#boy" style="margin-left:10px; background: #69c6d7;">Baby Boy</a>
+<a class="btn" href="#girl" style="background:#ecabc7;">Baby girl</a>
+
+</div>
+        <div class="menuitems">
+
+            <h1 id="boy" style="margin-bottom: 0px;">baby boys</h1>
+            <h1 class="smallspace" id="tow">_____</h1>
+            <div class="category1 items"></div>
+
+            <h1 id="girl" style="margin-bottom: 0px;">baby girls </h1>
+            <h1 id="zeros" class="smallspace2" id="tow">_____</h1>
+            <div class="category2 items"></div>
+
+            <h1 style="margin-bottom: 0px;">babys</h1>
+            <div class="category3 items"></div>
+
+           <!-- <h1 style="margin-bottom: 0px;">סנדי</h1>
+            <h1 id="thr" class="smallspace" id="tow">_____</h1>
+            <div class="category4 items"></div>
+
+            <h1 style="margin-bottom: 0px;">מיץ טבעי</h1>
+            <h1 id="fore" class="smallspace" id="tow">_____</h1>
+            <div class="category5 items"></div>
+
+
+            <h1 style="margin-bottom: 0px;">קוקטייל על בסיס חלב</h1>
+            <h1 id="five" class="smallspace" id="tow">_____</h1>
+            <div class="category6 items"></div>-->
+
+
+
+
+        </div>
+        <div id="mybutton" style="position: fixed;
+    bottom: -4px;
+    right: 10px;">
+            <span style="margin-bottom: 200px;
+        margin-right: 50px;
+        display: table-cell;" class="totalitems"></span>
+            <a class="feedback" href="#nv" style="    background-color: #95c8e9;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 4px;
+    padding-bottom: 10px;
+    border-color: black;"><i class="fa fa-shopping-cart" style="    color: #ecabc7;
+    font-size: 24px;"></i></a>
+        </div>
+    </div>
+    <script>
+        var random = Math.floor((Math.random() * 2000)) + 2000;
+        $(document).ready(function () {
+            setTimeout(function () {
+                $('body').addClass('loaded');
+            }, random);
+        });
+
+        const target = window.document.getElementsByClassName('h1')[0]
+
+        const flickerLetter = letter => `<span style="animation: text-flicker-in-glow ${Math.random() * 4}s linear both ">${letter}</span>`
+        const colorLetter = letter => `<span style="color: hsla(${Math.random() * 360}, 100%, 80%, 1);">${letter}</span>`;
+        const flickerAndColorText = text =>
+            text
+                .split('')
+                .map(flickerLetter)
+                .map(colorLetter)
+                .join('');
+        const neonGlory = target => target.innerHTML = flickerAndColorText(target.textContent);
+
+
+        neonGlory(target);
+        target.onclick = ({ target }) => neonGlory(target);
+
+
+
+
+    </script>
+
+
+    <script src="cart.js"></script>
+    <script src="firebase.js"></script>
+
+</body>
+
+</html>
